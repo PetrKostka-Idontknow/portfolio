@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="cs">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Portfolio Petra Kostky. Student, který objevuje svět tvorby webů.">
+	<title>Petr Kostka | Portfolio</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			color-scheme: light;
+			--ink: #202922;
+			--muted: #647068;
+			--paper: #f4f5ef;
+			--surface: #fffefa;
+			--line: #dce2d8;
+			--green: #256b4b;
+			--green-dark: #174832;
+			--lime: #d4f36a;
+			--coral: #df755d;
+			--mono: "DM Mono", "Courier New", monospace;
+			--sans: "Manrope", "Trebuchet MS", sans-serif;
+		}
+
+		* { box-sizing: border-box; }
+		html { scroll-behavior: smooth; }
+		body {
+			margin: 0;
+			color: var(--ink);
+			background: var(--paper);
+			font-family: var(--sans);
+			line-height: 1.65;
+		}
+		a { color: inherit; }
+		a:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
+		.wrap { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+
+		.topbar {
+			position: absolute;
+			z-index: 2;
+			top: 0;
+			left: 0;
+			width: 100%;
+			color: #fffefa;
+		}
+		.nav {
+			min-height: 82px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 24px;
+			border-bottom: 1px solid rgb(255 255 255 / 24%);
+		}
+		.wordmark { font-size: 15px; font-weight: 800; text-decoration: none; letter-spacing: 0; }
+		.wordmark span { color: var(--lime); }
+		.nav-links { display: flex; align-items: center; gap: clamp(16px, 3vw, 34px); }
+		.nav-links a { font-size: 13px; font-weight: 700; text-decoration: none; color: rgb(255 254 250 / 82%); }
+		.nav-links a:hover { color: var(--lime); }
+
+		.hero {
+			position: relative;
+			min-height: 680px;
+			display: grid;
+			align-items: center;
+			overflow: hidden;
+			color: #fffefa;
+			background: var(--green-dark);
+			isolation: isolate;
+		}
+		.hero::before {
+			position: absolute;
+			z-index: -2;
+			inset: 0 0 0 40%;
+			content: "";
+			background: linear-gradient(90deg, #174832 0%, rgb(23 72 50 / 25%) 48%, rgb(23 72 50 / 8%) 100%),
+				url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1800&q=85") center 52% / cover;
+			animation: reveal-photo 900ms ease-out both;
+		}
+		.hero::after {
+			position: absolute;
+			z-index: -1;
+			inset: 0;
+			content: "";
+			background: linear-gradient(90deg, var(--green-dark) 5%, rgb(23 72 50 / 96%) 31%, rgb(23 72 50 / 35%) 74%, rgb(23 72 50 / 22%) 100%);
+		}
+		.hero-copy { padding: 148px 0 105px; max-width: 700px; animation: rise-in 700ms 100ms ease-out both; }
+		.eyebrow { display: flex; align-items: center; gap: 10px; color: var(--lime); font: 12px var(--mono); text-transform: uppercase; }
+		.eyebrow::before { width: 26px; height: 1px; content: ""; background: currentColor; }
+		h1 { max-width: 680px; margin: 23px 0 16px; font-size: 84px; line-height: .98; letter-spacing: 0; }
+		h1 span { color: var(--lime); }
+		.hero-copy > p { max-width: 465px; margin: 22px 0 30px; color: rgb(255 254 250 / 82%); font-size: 17px; }
+		.button {
+			display: inline-flex;
+			min-height: 48px;
+			align-items: center;
+			gap: 12px;
+			padding: 0 19px;
+			border: 1px solid var(--lime);
+			border-radius: 3px;
+			background: var(--lime);
+			color: var(--green-dark);
+			font-size: 13px;
+			font-weight: 800;
+			text-decoration: none;
+			transition: background 160ms ease, transform 160ms ease;
+		}
+		.button:hover { transform: translateY(-2px); background: #e2ff8c; }
+		.button span { font-size: 18px; line-height: 1; }
+		.hero-index { position: absolute; right: max(24px, calc((100vw - 1120px) / 2)); bottom: 35px; color: rgb(255 254 250 / 75%); font: 11px var(--mono); }
+
+		section { scroll-margin-top: 24px; }
+		.section { padding: 100px 0; }
+		.section-heading { margin-bottom: 38px; }
+		.kicker { margin: 0 0 10px; color: var(--green); font: 12px var(--mono); text-transform: uppercase; }
+		h2 { margin: 0; font-size: 44px; line-height: 1.12; letter-spacing: 0; }
+		.about-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: 90px; align-items: start; }
+		.about-note { padding-top: 8px; }
+		.about-note p { margin: 0 0 18px; color: var(--muted); font-size: 16px; }
+		.about-note strong { color: var(--ink); }
+
+		.skills { padding: 76px 0; background: #e8ede4; }
+		.skills-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 32px; }
+		.skills-head p { max-width: 350px; margin: 0; color: var(--muted); font-size: 14px; }
+		.skill-list { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid #cbd5c9; }
+		.skill { min-height: 110px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #cbd5c9; }
+		.skill-number { color: var(--green); font: 12px var(--mono); }
+		.skill h3 { margin: 0; font-size: 17px; }
+		.skill p { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+
+		.projects { padding-bottom: 112px; }
+		.project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+		.project {
+			min-height: 250px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			padding: 27px;
+			border: 1px solid var(--line);
+			background: var(--surface);
+			transition: border-color 180ms ease, transform 180ms ease;
+		}
+		.project:hover { transform: translateY(-3px); border-color: var(--green); }
+		.project-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+		.project-type { color: var(--green); font: 11px var(--mono); text-transform: uppercase; }
+		.project-mark { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--lime); color: var(--green-dark); font-size: 18px; }
+		.project h3 { margin: 26px 0 8px; font-size: 23px; line-height: 1.25; }
+		.project p { max-width: 440px; margin: 0; color: var(--muted); font-size: 14px; }
+		.project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+		.project-tags span { padding: 5px 9px; border: 1px solid var(--line); border-radius: 2px; color: var(--muted); font: 10px var(--mono); }
+		.project-next { background: var(--green); color: #fffefa; }
+		.project-next .project-type, .project-next p { color: rgb(255 254 250 / 76%); }
+		.project-next .project-mark { background: var(--coral); color: #fffefa; }
+		.project-next .project-tags span { border-color: rgb(255 255 255 / 30%); color: #fffefa; }
+
+		.contact { padding: 78px 0; background: var(--green-dark); color: #fffefa; }
+		.contact-row { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+		.contact .kicker { color: var(--lime); }
+		.contact h2 { max-width: 630px; }
+		.contact .button { flex: 0 0 auto; }
+		footer { padding: 23px 0; background: #123b29; color: rgb(255 254 250 / 75%); font-size: 11px; }
+		.footer-row { display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+		.footer-row p { margin: 0; }
+		.footer-links { display: flex; flex-wrap: wrap; gap: 18px; }
+		.footer-links a { text-underline-offset: 3px; }
+
+		@keyframes rise-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+		@keyframes reveal-photo { from { opacity: .35; transform: scale(1.03); } to { opacity: 1; transform: scale(1); } }
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+		}
+		@media (max-width: 700px) {
+			.wrap { width: min(100% - 36px, 540px); }
+			.nav { min-height: 72px; align-items: flex-start; flex-direction: column; justify-content: center; gap: 7px; }
+			.wordmark { font-size: 13px; }
+			.nav-links { width: 100%; justify-content: space-between; gap: 12px; }
+			.nav-links a { font-size: 11px; }
+			.hero { min-height: 650px; }
+			.hero::before { inset: 0; background-position: 58% center; }
+			.hero::after { background: linear-gradient(90deg, rgb(23 72 50 / 96%), rgb(23 72 50 / 58%)), linear-gradient(0deg, rgb(23 72 50 / 60%), transparent 75%); }
+			.hero-copy { padding: 150px 0 90px; }
+			h1 { font-size: 54px; }
+			h2 { font-size: 36px; }
+			.hero-copy > p { font-size: 15px; }
+			.section { padding: 72px 0; }
+			.about-grid { grid-template-columns: 1fr; gap: 22px; }
+			.skills { padding: 64px 0; }
+			.skills-head { align-items: flex-start; flex-direction: column; gap: 12px; }
+			.skill-list { grid-template-columns: 1fr 1fr; }
+			.skill { min-height: 90px; }
+			.project-grid { grid-template-columns: 1fr; }
+			.projects { padding-bottom: 76px; }
+			.contact-row { align-items: flex-start; flex-direction: column; }
+			.footer-row { align-items: flex-start; flex-direction: column; }
+		}
+		@media (max-width: 380px) {
+			.nav-links a { font-size: 10px; }
+			h1 { font-size: 46px; }
+			.skill-list { grid-template-columns: 1fr; }
+		}
+	</style>
+</head>
+<body>
+	<header class="hero" id="home">
+		<div class="topbar">
+			<nav class="nav wrap" aria-label="Hlavní navigace">
+				<a class="wordmark" href="#home">PK<span>.</span> / PORTFOLIO</a>
+				<div class="nav-links">
+					<a href="#about">O mně</a>
+					<a href="#skills">Dovednosti</a>
+					<a href="#projects">Projekty</a>
+					<a href="#contact">Kontakt</a>
+				</div>
+			</nav>
+		</div>
+		<div class="wrap">
+			<div class="hero-copy">
+				<p class="eyebrow">Portfolio · 2026</p>
+				<h1>Ahoj, jsem<br><span>Petr Kostka.</span></h1>
+				<p>Student a začínající tvůrce webů. Baví mě měnit nápady v přehledné a funkční stránky.</p>
+				<a class="button" href="#projects">Prohlédnout projekty <span aria-hidden="true">↘</span></a>
+			</div>
+		</div>
+		<span class="hero-index" aria-hidden="true">01 / 04</span>
+	</header>
+
+	<main>
+		<section class="section" id="about">
+			<div class="wrap about-grid">
+				<div class="section-heading">
+					<p class="kicker">01 — Pár slov o mně</p>
+					<h2>Učím se tvořit<br>věci pro web.</h2>
+				</div>
+				<div class="about-note">
+					<p><strong>Jmenuji se Petr Kostka.</strong> Zajímám se o webové stránky a o to, jak se z řádků kódu stane něco, co se dobře používá.</p>
+					<p>Právě poznávám základy HTML a CSS. Tohle portfolio je jeden z mých prvních kroků a místo, kam budu postupně přidávat další práci.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="skills" id="skills">
+			<div class="wrap">
+				<div class="skills-head">
+					<div class="section-heading">
+						<p class="kicker">02 — Co se učím</p>
+						<h2>Dovednosti</h2>
+					</div>
+					<p>Teď se soustředím na základy a každý projekt mi přidá něco nového.</p>
+				</div>
+				<div class="skill-list">
+					<article class="skill"><span class="skill-number">01</span><div><h3>HTML</h3><p>Struktura a obsah stránky</p></div></article>
+					<article class="skill"><span class="skill-number">02</span><div><h3>CSS</h3><p>Vzhled a rozvržení</p></div></article>
+					<article class="skill"><span class="skill-number">03</span><div><h3>Responzivní web</h3><p>Telefon i větší obrazovka</p></div></article>
+				</div>
+			</div>
+		</section>
+
+		<section class="section projects" id="projects">
+			<div class="wrap">
+				<div class="section-heading">
+					<p class="kicker">03 — Na čem pracuji</p>
+					<h2>Moje projekty</h2>
+				</div>
+				<div class="project-grid">
+					<article class="project">
+						<div>
+							<div class="project-top"><span class="project-type">Osobní projekt · 2026</span><span class="project-mark" aria-hidden="true">↗</span></div>
+							<h3>Moje portfolio</h3>
+							<p>Osobní stránka vytvořená v HTML a CSS. Učím se na ní pracovat se strukturou, barvami i zobrazením na mobilu.</p>
+						</div>
+						<div class="project-tags"><span>HTML</span><span>CSS</span><span>Responzivita</span></div>
+					</article>
+					<article class="project project-next">
+						<div>
+							<div class="project-top"><span class="project-type">Další kapitola</span><span class="project-mark" aria-hidden="true">✳</span></div>
+							<h3>Další projekt se připravuje</h3>
+							<p>Tohle místo čeká na další nápad. Portfolio budu rozšiřovat spolu s tím, co se naučím.</p>
+						</div>
+						<div class="project-tags"><span>Brzy doplním</span></div>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<section class="contact" id="contact">
+			<div class="wrap contact-row">
+				<div>
+					<p class="kicker">04 — Spojme se</p>
+					<h2>Máš nápad nebo zpětnou vazbu?</h2>
+				</div>
+				<a class="button" href="https://github.com/PetrKostka-Idontknow" target="_blank" rel="noopener noreferrer">Najdeš mě na GitHubu <span aria-hidden="true">↗</span></a>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<div class="wrap footer-row">
+			<p>© 2026 Petr Kostka · Vytvořeno v HTML a CSS</p>
+			<div class="footer-links">
+				<a href="https://validator.w3.org/nu/?doc=https%3A%2F%2Fpetrkostka-idontknow.github.io%2Fportfolio%2F" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✓</span> Validace HTML</a>
+				<a href="https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fpetrkostka-idontknow.github.io%2Fportfolio%2F" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">✓</span> Validace CSS</a>
+				<a href="https://images.unsplash.com/photo-1498050108023-c5249f4df085" target="_blank" rel="noopener noreferrer">Foto: Unsplash</a>
+				<a href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer">Písmo: Google Fonts</a>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>
